@@ -1,0 +1,12 @@
+{
+  "name": "meeting-brief",
+  "version": "1.0.0",
+  "description": "Transcribe meeting or call recordings, archive them under the project's arch/ folder, and brief you back as a spoken audio link instead of a wall of text.",
+  "author": {
+    "name": "Marc Amoros",
+    "url": "https://github.com/marks97"
+  },
+  "repository": "https://github.com/marks97/meeting-brief",
+  "license": "MIT",
+  "skills": "./meeting-brief/"
+}

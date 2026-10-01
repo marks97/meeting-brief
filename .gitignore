@@ -1,0 +1,15 @@
+.venv/
+*.local.sh
+__pycache__/
+*.pyc
+node_modules/
+*.pem
+*.key
+out/
+*.mp3
+*.mp4
+*.m4a
+*.webm
+metadata.json
+skills-lock.json
+.env

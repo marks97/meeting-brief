@@ -1,0 +1,11 @@
+{
+  "name": "meeting-capture-presign",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Token-gated presign endpoint for the Meeting Capture extension.",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.650.0",
+    "@aws-sdk/s3-request-presigner": "^3.650.0"
+  }
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>meet · settings</title>
+  <link rel="icon" href="icons/icon-32.png">
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    .wrap { max-width: 600px; margin: 0 auto; padding: 36px 20px 56px; display: flex; flex-direction: column; gap: 14px; }
+    .opt-h { display: flex; align-items: center; justify-content: space-between; }
+    .lede { margin: -2px 0 6px; font-size: 12.5px; color: var(--ink2); max-width: 480px; }
+    .row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .row-t { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .row-d { font-size: 12px; color: var(--ink3); margin-top: 2px; max-width: 420px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .savebar { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 12px 0; background: linear-gradient(to top, var(--bg) 70%, transparent); }
+    .opt-f { display: flex; justify-content: center; gap: 8px; font-size: 11.5px; color: var(--ink3); padding-top: 4px; }
+    .mic-row { align-items: center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="opt-h">
+      <div class="lockup">
+        <span class="mark s34" aria-hidden="true"></span>
+        <span class="wordmark lg">meet<span class="caret" aria-hidden="true">_</span><span class="sr-only"> settings</span></span>
+      </div>
+      <span class="pill muted mono" id="version"></span>
+    </header>
+    <p class="lede">Records your web calls and drops them in your private meeting inbox, where Claude transcribes and files them.</p>
+
+    <section class="card">
+      <div class="card-h">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        Connection
+        <span class="meta"><span class="pill" id="tokenPill"></span></span>
+      </div>
+      <div class="card-b">
+        <label class="label" for="endpoint">Upload endpoint</label>
+        <input class="field" id="endpoint" type="text" spellcheck="false" placeholder="https://your-endpoint.example.com/api">
+        <div class="hint">The presign endpoint your deployment prints (its "/api" path).</div>
+
+        <div class="divider"></div>
+
+        <label class="label" for="token">Upload token</label>
+        <div class="field-wrap">
+          <input class="field" id="token" type="password" spellcheck="false" autocomplete="off" placeholder="paste the token">
+          <button class="icon-btn" id="reveal" type="button" aria-label="Show token" title="Show token">
+            <svg class="icon" viewBox="0 0 24 24" id="revealIcon"></svg>
+          </button>
+        </div>
+        <div class="hint">The only secret this browser holds. It must match the endpoint's upload token.</div>
+
+        <div class="divider"></div>
+
+        <label class="label" for="workspace">Workspace tag</label>
+        <input class="field" id="workspace" type="text" spellcheck="false" placeholder="my-project">
+        <div class="hint">The project this browser's calls default to. Claude still files a call by who it was with.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+        Recording
+      </div>
+      <div class="card-b">
+        <div class="row">
+          <div>
+            <div class="row-t" id="autoLabel">Auto-record calls</div>
+            <div class="row-d">Records on its own when you join a call and uploads when you leave. Nothing to click.</div>
+            <div class="chips">
+              <span class="pill muted">Google Meet</span>
+              <span class="pill muted">Zoom web</span>
+              <span class="pill muted">Teams web</span>
+            </div>
+          </div>
+          <button class="switch" id="autoRecord" type="button" role="switch" aria-checked="true" aria-labelledby="autoLabel"></button>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+          <div>
+            <div class="row-t" id="videoLabel">Record video</div>
+            <div class="row-d">For recordings you start from the popup: Chrome only allows tab video after a click, so automatic recordings are audio. Hundreds of MB per hour; the transcript only needs audio.</div>
+          </div>
+          <button class="switch" id="recordVideo" type="button" role="switch" aria-checked="false" aria-labelledby="videoLabel"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-h">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg>
+        Microphone
+        <span class="meta"><span class="pill" id="micPill"></span></span>
+      </div>
+      <div class="card-b">
+        <div class="row mic-row">
+          <div class="row-d" id="micText">Your voice comes from the mic, everyone else from the tab. Grant it once so the recorder hears your side.</div>
+          <button class="btn" id="mic" type="button">Grant access</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="savebar">
+      <span class="pill" id="saveState" hidden></span>
+      <button class="btn primary lg" id="save" type="button">Save changes</button>
+    </div>
+
+    <footer class="opt-f mono">
+      <span>Meeting Capture</span>
+    </footer>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

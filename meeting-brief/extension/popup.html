@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="ui.css">
+  <style>
+    body { width: 320px; }
+    .pop-h { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
+    .pop-h .sub { font-size: 11px; color: var(--ink3); margin-top: 3px; }
+    .pop-b { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; }
+    .pop-f { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px 6px 14px; background: var(--panel); border-top: 1px solid var(--line); font-size: 11.5px; color: var(--ink3); }
+    .pop-f .left { display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .tab-title { font-size: 13px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .timer { font-size: 26px; font-weight: 600; letter-spacing: -.02em; color: var(--ink); line-height: 1.1; margin: 2px 0 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+    .rec-title { font-size: 12.5px; color: var(--ink2); margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <header class="pop-h">
+    <div class="lockup">
+      <span class="mark s26" id="mark" aria-hidden="true"></span>
+      <div>
+        <div class="wordmark sm">meet</div>
+        <div class="sub">meeting capture</div>
+      </div>
+    </div>
+    <span class="pill muted" id="status"><span class="dot" id="statusDot"></span><span id="statusText">Idle</span></span>
+  </header>
+
+  <main class="pop-b">
+    <div class="note warn" id="setupNote" hidden>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+      <span><b>No upload token yet.</b> Add it in Options before recording.</span>
+    </div>
+    <div class="note warn" id="clickNote" hidden>
+      <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <span><b>Chrome blocked auto-start.</b> Press Start to record this call.</span>
+    </div>
+
+    <section class="card" id="tabCard">
+      <div class="card-h">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg>
+        <span id="tabPlatform">This tab</span>
+        <span class="meta mono" id="tabCode"></span>
+      </div>
+      <div class="card-b">
+        <div class="tab-title" id="tabTitle">Not a call</div>
+        <div class="hint" id="tabHint">Start records whatever is playing in this tab.</div>
+      </div>
+    </section>
+
+    <section class="card" id="recCard" hidden>
+      <div class="card-b" style="padding-top: 12px;">
+        <span class="label" id="recLabel">Recording</span>
+        <div class="timer mono tnum" id="timer">00:00:00</div>
+        <div class="rec-title" id="recTitle"></div>
+        <div class="chips">
+          <span class="pill" id="micChip"></span>
+          <span class="pill muted" id="mediaChip"></span>
+        </div>
+      </div>
+    </section>
+
+    <button class="btn primary lg block" id="start">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/></svg>
+      Start recording
+    </button>
+    <button class="btn danger lg block" id="stop" hidden>
+      <svg class="icon" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none"/></svg>
+      Stop &amp; upload
+    </button>
+
+    <div class="note" id="lastNote" hidden>
+      <svg class="icon" viewBox="0 0 24 24" id="lastIcon"></svg>
+      <span><b id="lastHead"></b><span class="sub" id="lastSub"></span></span>
+    </div>
+  </main>
+
+  <footer class="pop-f">
+    <div class="left">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+      <span class="mono" id="foot">no workspace</span>
+    </div>
+    <button class="btn ghost" id="opts">
+      <svg class="icon" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+      Options
+    </button>
+  </footer>
+  <script src="popup.js"></script>
+</body>
+</html>
